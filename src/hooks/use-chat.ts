@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useChatStore } from '@/store/chat-store';
 import { useSettingsStore } from '@/store/settings-store';
-import { toast } from 'react-hot-toast';
+import { ChatConversation } from '@/types/chat';
+import { toast } from 'sonner';
 
 export function useChat() {
   const {
@@ -230,7 +231,7 @@ export function useConversationSearch() {
     );
   }, [conversations]);
 
-  const sortConversations = useCallback((conversations: typeof conversations, sortBy: 'date' | 'title') => {
+  const sortConversations = useCallback((conversations: ChatConversation[], sortBy: 'date' | 'title') => {
     return [...conversations].sort((a, b) => {
       if (sortBy === 'date') {
         return b.updatedAt.getTime() - a.updatedAt.getTime();
