@@ -57,7 +57,7 @@ export class AIService {
   
   // 构建卡牌上下文信息（用于对话）
   buildCardContext(drawnCards: DrawnCard[], spreadName: string): string {
-    let context = `牌阵类型：${spreadName}\n\n`;
+    let context = `这是用户抽取到的塔罗牌\n\n 牌阵类型：${spreadName}\n\n`;
     
     drawnCards.forEach((drawnCard, index) => {
       const { card, isReversed, position } = drawnCard;

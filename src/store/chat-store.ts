@@ -94,6 +94,15 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       
+      // 先构建对话历史（在添加当前用户消息之前）
+      const conversationHistory: OpenAIMessage[] = get().messages
+        .filter(msg => msg.conversationId === currentConversationId)
+        .slice(-8) // 只保留最近8条消息作为上下文
+        .map(msg => ({
+          role: msg.role as 'user' | 'assistant',
+          content: msg.content
+        }));
+      
       // 保存用户消息
       const userMessage: Omit<ChatMessage, 'id'> = {
         conversationId: currentConversationId,
@@ -112,15 +121,6 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       set(state => ({
         messages: [...state.messages, savedUserMessage]
       }));
-      
-      // 构建对话历史（转换为OpenAI格式）
-      const conversationHistory: OpenAIMessage[] = get().messages
-        .filter(msg => msg.conversationId === currentConversationId)
-        .slice(-8) // 只保留最近8条消息作为上下文
-        .map(msg => ({
-          role: msg.role as 'user' | 'assistant',
-          content: msg.content
-        }));
       
       // 生成AI回复（传递对话历史和卡牌上下文）
       const aiResponse = await aiService.generateChatResponse(
