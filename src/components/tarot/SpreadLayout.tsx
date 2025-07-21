@@ -9,7 +9,7 @@ import { useSettingsStore } from '@/store/settings-store';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 interface SpreadLayoutProps {
   spread: TarotSpread;
@@ -25,8 +25,6 @@ export function SpreadLayout({ spread, className }: SpreadLayoutProps) {
     handleRemoveCard,
     handleToggleReverse,
     handleRevealCard,
-    handleRevealAllCards,
-    handleHideAllCards,
     generateReading,
     gameStatus
   } = useTarotGame();
@@ -41,11 +39,7 @@ export function SpreadLayout({ spread, className }: SpreadLayoutProps) {
     handleToggleReverse(positionId);
   };
   
-  const handleGenerateReading = () => {
-    if (gameStatus.canGenerateReading) {
-      generateReading();
-    }
-  };
+
   
   // 计算牌阵的边界框
   const getBoundingBox = () => {

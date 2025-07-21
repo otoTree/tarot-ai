@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useGameStore } from '@/store/game-store';
 import { useChatStore } from '@/store/chat-store';
 import { useSettingsStore } from '@/store/settings-store';
@@ -154,7 +154,7 @@ export function useTarotGame() {
       });
 
       // 创建或使用现有对话
-      const conversationId = await createConversation(sessionId, `${currentSpread.name}解读`);
+      await createConversation(sessionId, `${currentSpread.name}解读`);
       
       // 发送解读消息
       await sendMessage(reading, 'reading');

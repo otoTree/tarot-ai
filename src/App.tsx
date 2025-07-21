@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import { useSettingsStore } from '@/store/settings-store';
-import { database } from '@/lib/database';
+import { db } from '@/lib/database';
 import { GamePage } from '@/components/pages/GamePage';
 import { Sparkles, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -19,7 +19,7 @@ function App() {
     const initializeApp = async () => {
       try {
         // 初始化数据库
-        await database.open();
+        await db.open();
         
         // 加载设置
         const settings = useSettingsStore.getState();

@@ -78,6 +78,8 @@ interface SettingsPanelProps {
 export function SettingsPanel({ className }: SettingsPanelProps) {
   const [activeSection, setActiveSection] = useState<SettingsSection>('appearance');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [primaryColor, setPrimaryColor] = useState('#8b5cf6');
+  const [fontSize, setFontSize] = useState(16);
   
   const {
     theme,
@@ -197,7 +199,7 @@ export function SettingsPanel({ className }: SettingsPanelProps) {
       a.click();
       URL.revokeObjectURL(url);
       toast.success('设置已导出');
-    } catch (error) {
+    } catch {
       toast.error('导出失败');
     }
   };
@@ -339,8 +341,16 @@ export function SettingsPanel({ className }: SettingsPanelProps) {
             <AnimatePresence mode="wait">
               {activeSection === 'appearance' && (
                 <AppearanceSettings
-                  theme={theme}
-                  onThemeChange={updateTheme}
+                  theme={{
+                    mode: theme,
+                    primaryColor: primaryColor,
+                    fontSize: fontSize
+                  }}
+                  onThemeChange={(newTheme) => {
+                    updateTheme(newTheme.mode as 'dark' | 'light' | 'auto');
+                    setPrimaryColor(newTheme.primaryColor);
+                    setFontSize(newTheme.fontSize);
+                  }}
                   onChange={() => setHasUnsavedChanges(true)}
                 />
               )}
@@ -400,8 +410,16 @@ export function SettingsPanel({ className }: SettingsPanelProps) {
 
 // 外观设置组件
 function AppearanceSettings({ theme, onThemeChange, onChange }: {
-  theme: any;
-  onThemeChange: (theme: any) => void;
+  theme: {
+    mode: string;
+    primaryColor: string;
+    fontSize: number;
+  };
+  onThemeChange: (theme: {
+    mode: string;
+    primaryColor: string;
+    fontSize: number;
+  }) => void;
   onChange: () => void;
 }) {
   const themes = [

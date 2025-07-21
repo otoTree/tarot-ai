@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { TarotCard as TarotCardType, DrawnCard } from '@/types/tarot';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface TarotCardProps {
   card?: TarotCardType;
@@ -133,14 +134,14 @@ export function TarotCard({
           <div className="w-full h-full bg-white rounded-lg relative overflow-hidden">
             {/* 卡牌图片 */}
             <div className="absolute inset-1 rounded-md overflow-hidden">
-              <img 
+              <Image 
                 src={displayCard.imageUrl} 
                 alt={displayCard.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
+                fill
+                className="object-cover"
+                onError={() => {
                   // 如果图片加载失败，显示占位符
-                  const target = e.target as HTMLImageElement;
-                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjNEMxRDk1Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTUwIiBmaWxsPSIjRkZENzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE0Ij7lm77niYfkuI3lrZjlnKg8L3RleHQ+Cjwvc3ZnPg==';
+                  console.warn(`Failed to load image: ${displayCard.imageUrl}`);
                 }}
               />
             </div>

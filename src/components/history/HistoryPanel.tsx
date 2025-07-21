@@ -43,7 +43,7 @@ export function HistoryPanel({
   onSelectConversation,
   className
 }: HistoryPanelProps) {
-  const [historyType, setHistoryType] = useState<HistoryType>('all');
+  const [historyType] = useState<HistoryType>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortBy>('date');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
@@ -81,7 +81,7 @@ export function HistoryPanel({
     try {
       await deleteSession(sessionId);
       toast.success('游戏记录已删除');
-    } catch (error) {
+    } catch {
       toast.error('删除失败');
     }
   };
@@ -90,7 +90,7 @@ export function HistoryPanel({
     try {
       await deleteConversation(conversationId);
       toast.success('对话记录已删除');
-    } catch (error) {
+    } catch {
       toast.error('删除失败');
     }
   };
@@ -100,7 +100,7 @@ export function HistoryPanel({
       try {
         await clearAllHistory();
         toast.success('历史记录已清空');
-      } catch (error) {
+      } catch {
         toast.error('清空失败');
       }
     }
@@ -110,7 +110,7 @@ export function HistoryPanel({
     try {
       await exportHistory();
       toast.success('历史记录已导出');
-    } catch (error) {
+    } catch {
       toast.error('导出失败');
     }
   };
@@ -121,7 +121,7 @@ export function HistoryPanel({
       try {
         await importHistory(file);
         toast.success('历史记录已导入');
-      } catch (error) {
+      } catch {
         toast.error('导入失败');
       }
     }
