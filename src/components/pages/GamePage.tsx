@@ -118,7 +118,7 @@ export function GamePage() {
         {/* 主内容区 */}
         <div className={cn(
           'flex-1 flex flex-col transition-all duration-300',
-          sidePanel !== 'none' && 'mr-96'
+          (sidePanel === 'chat' || sidePanel === 'history') && 'mr-96'
         )}>
           {/* 顶部导航栏 */}
           <motion.header
@@ -257,9 +257,9 @@ export function GamePage() {
           </div>
         </div>
         
-        {/* 侧边面板 */}
+        {/* 侧边面板 - 对话和历史记录 */}
         <AnimatePresence>
-          {sidePanel !== 'none' && (
+          {(sidePanel === 'chat' || sidePanel === 'history') && (
             <motion.div
               initial={{ x: 384, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -273,7 +273,6 @@ export function GamePage() {
                   <h3 className="font-bold text-white">
                     {sidePanel === 'chat' && '对话'}
                     {sidePanel === 'history' && '历史记录'}
-                    {sidePanel === 'settings' && '设置'}
                   </h3>
                   
                   <Button
@@ -316,12 +315,53 @@ export function GamePage() {
                        }}
                     />
                   )}
-                  
-                  {sidePanel === 'settings' && (
-                    <SettingsPanel />
-                  )}
                 </div>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* 设置面板 - 居中模态框 */}
+        <AnimatePresence>
+          {sidePanel === 'settings' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={() => setSidePanel('none')}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="bg-gray-900/95 backdrop-blur-sm border border-white/10 rounded-xl shadow-2xl w-full max-w-4xl h-[80vh] max-h-[800px] overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* 模态框头部 */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                  <h3 className="text-2xl font-bold text-white flex items-center">
+                    <Settings className="w-6 h-6 mr-3" />
+                    设置
+                  </h3>
+                  
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSidePanel('none')}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
+                
+                {/* 设置面板内容 */}
+                <div className="flex-1 overflow-hidden">
+                  <SettingsPanel />
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

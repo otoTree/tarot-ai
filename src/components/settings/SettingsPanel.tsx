@@ -125,7 +125,6 @@ export function SettingsPanel({ className }: SettingsPanelProps) {
   const sections = [
     { id: 'appearance', label: '外观主题', icon: Palette },
     { id: 'language', label: '语言设置', icon: Globe },
-    { id: 'game', label: '游戏设置', icon: Gamepad2 },
     { id: 'ai', label: 'AI 设置', icon: Bot },
     { id: 'ui', label: '界面设置', icon: Eye },
     { id: 'privacy', label: '隐私设置', icon: Shield },
@@ -610,10 +609,7 @@ function GameSettings({ settings, onSettingsChange, onChange }: {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div>
-        <h3 className="text-2xl font-bold text-white mb-2">游戏设置</h3>
-        <p className="text-gray-400">配置塔罗牌游戏的行为和体验</p>
-      </div>
+
       
       <div className="space-y-6">
         {/* 自动洗牌 */}
